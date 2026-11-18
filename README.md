@@ -38,3 +38,11 @@ The APK is generated at `android/app/build/outputs/apk/debug/app-debug.apk`.
 - Portal changes published to GitHub Pages appear in the app without rebuilding the APK.
 - The wrapper is online-first. It does not make Firebase-backed exams or results available offline.
 - The Capacitor `server.url` is configured to the supplied production URL. Treat this as a hosted-web wrapper; test authentication, file uploads/downloads, back navigation, and external links on the target Android phones before wider distribution.
+
+## Android PDF download handling
+
+This repository includes a custom Capacitor `MainActivity` that connects normal HTTP/HTTPS WebView download requests to Android's Download Manager. Files should appear in the phone's **Downloads** folder. The GitHub Actions workflow copies this activity into the generated Capacitor Android project before building.
+
+After uploading this updated repository to GitHub, run **Actions → Build World of Exam Android APK → Run workflow**. Install the newly generated debug APK and test the same result PDF again.
+
+Note: browser-generated `blob:` downloads are not handled by this first pass. If a result PDF still does not download, report what happens; blob-based generation may need an additional native bridge. This build remains a debug/test APK, not a signed public release APK.
